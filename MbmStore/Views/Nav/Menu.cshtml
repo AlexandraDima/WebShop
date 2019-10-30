@@ -1,0 +1,24 @@
+﻿@model IEnumerable<string>
+<!--Display the Home link that lists all the products without category-->
+<!--using the ActionLink helper method, which generates an HTML element using the routing information to display the list of all
+    the products with no filter category-->
+<!--If the the SelectedCategory value is null that class is added to the Home ActionLink-->
+@Html.ActionLink("Home", "Index", "Catalog", null,
+    new { @class = "btn btn-block btn-default btn-lg" + (ViewBag.SelectedCategory == null ? " btn-primary" : "") })
+
+<!--using RouteLink method we enumerate the category names and create links for each of them-->
+@foreach (var link in Model)
+{
+    @Html.RouteLink(link, new
+{
+    controller = "Catalog",
+    action = "Index",
+    category = link,
+    page = 1
+}, new
+{
+    //if the current link value matches the SelectedCategory value, will cause the button to be highlighted 
+    @class = "btn btn-block btn-default btn-lg"
+    + (link == ViewBag.SelectedCategory ? " btn-primary" : "")
+})
+}

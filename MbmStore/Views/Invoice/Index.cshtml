@@ -1,0 +1,79 @@
+﻿@using MbmStore.Models;
+
+@{
+    ViewBag.Title = "Invoices";
+}
+
+<div class="row">
+    @*Self closing form with 3 parameters: action method-Index, controller and Post Form method -appends the data to the bpdy*@
+    @using (Html.BeginForm("Index", "Invoice", FormMethod.Post))
+    {
+        //Display the dropdown list with 2 parameters-CustomerId and Select customer
+        @Html.DropDownList("CustomerId", "Select customer")
+    <button type="submit">Show invoices</button>
+    }
+
+</div>
+
+<div class="row">
+
+    <div class="col-md-4"><h2>Customer</h2></div>
+    <div class="col-md-4"><h2>Product</h2></div>
+    <div class="col-md-4"><h2>Price</h2></div>
+  
+
+    @*Display the details of the Invoices after the Show invoices button is submited*@ 
+    @foreach (Invoice invoice in ViewBag.Invoices)
+    {
+        <div class="row">
+
+            <div class="col-md-4">
+            
+                <p>@invoice.Customer.Firstname @invoice.Customer.Lastname</p>
+            </div>
+
+            <div class="col-md-4">
+              
+                @foreach (OrderItem orderItem in invoice.OrderItems)
+                {
+                    <p>
+                       Product: @orderItem.Quantity x @orderItem.Product.Title (@orderItem.Product.ToString().Substring(16))
+                    </p>
+
+
+                }
+
+                <h4>Total price</h4>
+
+         
+             </div>
+          
+            <div class="col-md-4">
+         
+                <div>
+                    @foreach (OrderItem orderItem in invoice.OrderItems)
+                {
+                        <p>
+                            @orderItem.Product.Price
+                        </p>
+                    
+                            }
+             <h4>@invoice.TotalPrice</h4>
+                </div>
+               
+
+
+            </div>
+        </div>
+        <br />
+
+    }
+
+   
+
+
+</div>
+
+    
+
+

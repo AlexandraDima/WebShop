@@ -1,0 +1,74 @@
+﻿@using MbmStore.Models;
+@using MbmStore.ViewModels;
+@*Using a strongly typed view*@ 
+@model MbmStore.ViewModels.ProductsListViewModel
+@{
+    ViewBag.Title = "CatalogProducts";
+}
+
+
+<!--Process of using Strongly Type view-->
+<div class="row" style="margin:20px;">
+
+    <!--View Cart button-->
+    @using (Html.BeginForm("Index", "Cart"))
+    {
+        @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+        <input type="submit" class="btn btn-success" value="View Cart" />
+    }
+
+    <!--Display the Books-->
+    <!--Using a foreach loop that returns the product type to the list and it's also connected to the ProductsListViewModel.Products-->
+    @if (Model.Products.OfType<Book>().Count() > 0)
+    {
+        <h2>Books</h2>
+        foreach (Book book in Model.Products.OfType<Book>().ToList())
+        {
+            <!--Call the partial view ProductSummaryBook using Html.Partial helper method 
+                where the parameters are the name of the view and the object type-->
+            @Html.Partial("ProductSummaryBook", book); <br />
+        }
+    }
+
+    <!--Display the MusicCD-->
+    @if (Model.Products.OfType<MusicCD>().Count() > 0) // The Count() method returns the number of elements of a list
+    {
+        <h2>Music</h2>
+        foreach (MusicCD musicCD in Model.Products.OfType<MusicCD>().ToList())
+        {
+            <!--Call the partial view ProductSummaryMusicCD using Html.Partial helper method-->
+            @Html.Partial("ProductSummaryMusicCD", musicCD); <br />
+        }
+    }
+
+    <!--Display the Movies-->
+    @if (Model.Products.OfType<Movie>().Count() > 0)
+    {
+        <h2>Movies</h2>
+        foreach (Movie movie in Model.Products.OfType<Movie>().ToList())
+        {
+            <!--Call the partial view ProductSummaryMovie using Html.Partial helper method-->
+            @Html.Partial("ProductSummaryMovies", movie); <br />
+        }
+    }
+
+    <!--Display the pagination-->
+    <div>
+        <!--Calling the URL.Action method to display the right page for each category-->
+        @Html.PageLinks(Model.PagingInfo, x => Url.Action("Index", new { page = x, category = Model.CurrentCategory }))
+    </div>
+
+</div>
+
+
+
+
+
+  
+
+
+
+
+
+
+

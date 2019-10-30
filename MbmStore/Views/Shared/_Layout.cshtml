@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+  
+</head>
+<body>
+    <!--Navigation menu-->
+    <div class="navbar navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Webshop", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="nav-item">
+                        @Html.ActionLink("Customers", "Index", "Customer")
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Catalog", "Index", "Catalog")
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Invoices", "Index", "Invoice")
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!--Main container-->
+      
+    <div class="container">
+        <!--Navigation bar - cart summary-->
+        <!--Widget that summarizes the content from the cart-->
+        <div class="navbar navbar-inverse" role="navigation">
+            <a class="navbar-brand" href="#">Music Book Movie Store</a>
+            @Html.Action("Summary", "Cart")
+        </div>
+        <div class="row panel">
+            <!--Sidebar of different product categories-------->
+            <!--Using the HTML.Action method to add the output from the Menu child action-->
+            <div id="categories" class="col-xs-3">
+                @Html.Action("Menu", "Nav")
+            </div>
+
+            <!--Div that renders the body content from each view-------->
+            <div class="col-xs-9">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</body>
+</html>

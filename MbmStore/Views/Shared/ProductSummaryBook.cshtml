@@ -1,0 +1,36 @@
+﻿@model MbmStore.Models.Book
+
+<!--Strongly typed partial view,  has the Book Model as the Model directive
+    This fragment of content can be embed into another view, a template that can be reused
+-->
+<div class="row" style="margin-bottom:20px;">
+    <div class="col-md-3">
+        <img src="/Content/Images/@Model.ImageUrl" alt="@Model.Title" />
+    </div>
+
+    <div class="col-md-4">
+        <!--The view connects to the Book model to display the title, author, publisher..-->
+        <strong>Title:</strong> @Model.Title<br />
+        <strong>Author:</strong> @Model.Author<br />
+        <strong>Publisher:</strong> @Model.Publisher<br />
+        <strong>ISBN:</strong> @Model.ISBN<br />
+        <strong>Price:</strong> @Model.Price<br />
+    </div>
+
+    <div class="col-md-2">
+        <!-- TODO: ADD QUANTITY SELECTOR HERE AND LINK IT TO CART -->
+        <div class="form-group">
+            <label for="ProductQuantity" class="control-label">Quantity</label>
+            @{ var productQuantities = new SelectList(Enumerable.Range(1, 10)); }
+            @Html.DropDownList("Quantity", productQuantities, new { @class = "form-control" })
+        </div>
+
+        <!--Cart button-->
+        @using (Html.BeginForm("AddToCart", "Cart"))
+        {
+            @Html.Hidden("ProductId", Model.ProductId)
+            @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+            <input type="submit" class="btn btn-success" value="Add to cart" />
+        }
+    </div>
+</div>
