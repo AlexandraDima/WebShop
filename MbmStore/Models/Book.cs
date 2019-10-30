@@ -9,7 +9,7 @@ namespace MbmStore.Models
     {
         // fields - I need fields only when I create my own get and set into the properties     
         // properties - just get and set creates private fields automatically
-        public string Author
+        public string Authhor
         {
             get;
             set;
